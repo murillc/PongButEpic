@@ -3,6 +3,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
+#include <GameEngine/EntitySystem/Components/SoundComponent.h>
 
 using namespace Game;
 
@@ -42,6 +43,7 @@ void BouncePhysicsComponent::Update()
 	__super::Update();
 
 	if (getCollide()) {
-		m_wantedVelocity.x = -m_wantedVelocity.x;
+		m_wantedVelocity = -m_wantedVelocity;
+		GetEntity()->GetComponent<GameEngine::SoundComponent>()->PlaySound(0);
 	}
 }
