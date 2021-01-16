@@ -12,7 +12,9 @@ namespace GameEngine
 		{
 			None = -1,
 
-			AddYourTexturesEnumerationsHere, // Replace this for your own enumerations
+			Player,
+
+			Obstacle,
 
 			Count,
 		};
@@ -20,6 +22,11 @@ namespace GameEngine
 
 	inline const char* GetPath(eTexture::type texture)
 	{
+		switch (texture)
+		{
+			case eTexture::Player: return "Player.png";
+			case eTexture::Obstacle: return "Obstacle.png";
+		}
 		return "UnknownTexType";
 	}
 
