@@ -37,7 +37,9 @@ void GameBoard::CreatePlayers()
 	spriteRender1->SetFillColor(sf::Color::Transparent);
 	spriteRender1->SetTexture(GameEngine::eTexture::Player);
 
-	m_player1->AddComponent<PlayerMovementComponent>();
+	// Player Movement Component
+	PlayerMovementComponent* playerMove1 = static_cast<PlayerMovementComponent*>(m_player1->AddComponent<PlayerMovementComponent>());
+	playerMove1->setPlayer(1);
 
 	m_player1->AddComponent<GameEngine::CollidableComponent>();
 
@@ -54,7 +56,9 @@ void GameBoard::CreatePlayers()
 	spriteRender2->SetFillColor(sf::Color::Transparent);
 	spriteRender2->SetTexture(GameEngine::eTexture::Player);
 
-	m_player2->AddComponent<PlayerMovementComponent>();
+	// Player Movement Component
+	PlayerMovementComponent* playerMove2 = static_cast<PlayerMovementComponent*>(m_player2->AddComponent<PlayerMovementComponent>());
+	playerMove2->setPlayer(2);
 
 	m_player2->AddComponent<GameEngine::CollidableComponent>();
 }
