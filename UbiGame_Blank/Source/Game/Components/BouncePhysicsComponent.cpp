@@ -4,6 +4,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 #include <GameEngine/EntitySystem/Components/SoundComponent.h>
+#include <Game/Components/ScoreComponent.h>
 
 using namespace Game;
 
@@ -27,6 +28,7 @@ void BouncePhysicsComponent::OnAddToWorld()
 
 void BouncePhysicsComponent::Update()
 {
+	Game::ScoreComponent* score = GetEntity()->GetComponent<Game::ScoreComponent>();
 	// Get delta time from the previous frame
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
 
@@ -45,5 +47,8 @@ void BouncePhysicsComponent::Update()
 	if (getCollide()) {
 		m_wantedVelocity = -m_wantedVelocity;
 		GetEntity()->GetComponent<GameEngine::SoundComponent>()->PlaySound(0);
+		score->increaseScore();
+
+		std::cout << score->getScore();
 	}
 }

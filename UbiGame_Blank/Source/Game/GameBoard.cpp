@@ -5,9 +5,12 @@
 #include "Game\Components\BouncePhysicsComponent.h"
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
-#include <GameEngine/EntitySystem/Components/SoundComponent.h>
-#include <iostream>
+#include "Game\Components\ScoreComponent.h"
 
+#include <GameEngine/EntitySystem/Components/SoundComponent.h>
+
+#include <iostream>
+#include<string>
 using namespace Game;
 
 GameBoard::GameBoard()
@@ -15,6 +18,8 @@ GameBoard::GameBoard()
 {
 	CreatePlayers();
 	CreateObstacle();
+	CreateText();
+
 }
 
 
@@ -43,6 +48,9 @@ void GameBoard::CreatePlayers()
 	playerMove1->setPlayer(1);
 
 	m_player1->AddComponent<GameEngine::CollidableComponent>();
+	m_player1->AddComponent<ScoreComponent>();
+	//m_player2->AddComponent<GameEngine::TextRenderComponent>();
+	
 
 	///////////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +58,9 @@ void GameBoard::CreatePlayers()
 	m_player2 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
 
-	m_player2->SetPos(sf::Vector2f(500.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
+	m_player2->SetPos(sf::Vector2f((GameEngine::GameEngineMain::GetInstance()->getWidth())-50.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
 	m_player2->SetSize(sf::Vector2f(50.f, 200.f));
+
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2->AddComponent<GameEngine::SpriteRenderComponent>());
@@ -64,6 +73,9 @@ void GameBoard::CreatePlayers()
 	playerMove2->setPlayer(2);
 
 	m_player2->AddComponent<GameEngine::CollidableComponent>();
+	m_player2->AddComponent<ScoreComponent>();
+
+	//m_player2->AddComponent<GameEngine::TextRenderComponent>();
 }
 
 void GameBoard::CreateObstacle()
@@ -76,17 +88,43 @@ void GameBoard::CreateObstacle()
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(obstacle->AddComponent<GameEngine::SpriteRenderComponent>());
+	
+	
+	GameEngine::TextRenderComponent* p1Text = static_cast<GameEngine::TextRenderComponent*>(obstacle->AddComponent<GameEngine::TextRenderComponent>());
 
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetTexture(GameEngine::eTexture::Obstacle);
 
 	obstacle->AddComponent<BouncePhysicsComponent>();
+	obstacle->AddComponent<ScoreComponent>();
+
+	
+	p1Text->SetFont("Inter-ExtraBold.ttf");
+
 
 	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(obstacle->AddComponent<GameEngine::SoundComponent>());
-	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/crmur/source/repos/HackersNest/UbiGame_Blank/Resources/sfx/hit.wav");
+	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/kurom/OneDrive/Documents/GitHub/PongButEpic/UbiGame_Blank/Resources/sfx/hit.wav");
+}
+
+void GameBoard::CreateText()
+{
+	
+	GameEngine::Entity* title = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(title);
+
+	Game::ScoreComponent* p1Score = static_cast<Game::ScoreComponent*>(title->AddComponent<Game::ScoreComponent>());
+
+	float centerX = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	float centerY = GameEngine::GameEngineMain::GetInstance()->getHeight();
+
+	title->SetPos(sf::Vector2f(centerX / 2 - 100.f, 30.f));
+
+	p1Score->SetFont("Inter-ExtraBold.ttf");
+	p1Score->SetString(std::to_string(p1Score->getScore()));
+	
 }
 
 void GameBoard::Update()
 {	
-	
+
 }

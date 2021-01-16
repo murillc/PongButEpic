@@ -21,6 +21,7 @@ namespace Game
 	private:
 		void CreatePlayers();
 		void CreateObstacle();
+		void CreateText();
 		GameEngine::Entity* m_player1;
 		GameEngine::Entity* m_player2;
 		GameEngine::Entity* obstacle;
