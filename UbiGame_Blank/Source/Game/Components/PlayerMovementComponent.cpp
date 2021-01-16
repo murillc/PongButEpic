@@ -34,20 +34,14 @@ void PlayerMovementComponent::Update()
 
 	float playerVel = 0.1f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		wantedVel.x -= playerVel;
+		wantedVel.y -= playerVel;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		wantedVel.x += playerVel;
+		wantedVel.y += playerVel;
 	}
 
 	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);
-
-	BouncePhysicsComponent* bouncePhys = GetEntity()->GetComponent<BouncePhysicsComponent>();
-	if (bouncePhys)
-	{
-		bouncePhys->SetVelocity(wantedVel);
-	}
 }
