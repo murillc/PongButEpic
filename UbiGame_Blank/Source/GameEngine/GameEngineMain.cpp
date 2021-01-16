@@ -8,6 +8,7 @@
 #include "Util/TextureManager.h"
 #include "Util/AnimationManager.h"
 #include "Util/CameraManager.h"
+#include "Util/SoundManager.h"
 
 using namespace GameEngine;
 

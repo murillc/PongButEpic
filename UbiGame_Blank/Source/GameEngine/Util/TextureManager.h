@@ -11,7 +11,6 @@ namespace GameEngine
 		enum type
 		{
 			None = -1,
-
 			Player,
 
 			Obstacle,
@@ -24,7 +23,7 @@ namespace GameEngine
 	{
 		switch (texture)
 		{
-			case eTexture::Player: return "Player.png";
+			case eTexture::Player: return "ball.png";
 			case eTexture::Obstacle: return "Obstacle.png";
 		}
 		return "UnknownTexType";

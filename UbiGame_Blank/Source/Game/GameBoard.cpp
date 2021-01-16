@@ -5,6 +5,7 @@
 #include "Game\Components\BouncePhysicsComponent.h"
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
+#include "GameEngine\EntitySystem\Components\SoundComponent.h"
 
 
 using namespace Game;
@@ -14,6 +15,9 @@ GameBoard::GameBoard()
 {
 	CreatePlayer();
 	CreateObstacle();
+
+
+
 }
 
 
@@ -37,7 +41,7 @@ void GameBoard::CreatePlayer()
 	spriteRender->SetTexture(GameEngine::eTexture::Player);
 
 	m_player->AddComponent<PlayerMovementComponent>();
-
+	//m_player->AddComponent<SoundComponent>();
 	m_player->AddComponent<BouncePhysicsComponent>();
 }
 
@@ -62,3 +66,4 @@ void GameBoard::Update()
 {	
 	
 }
+
