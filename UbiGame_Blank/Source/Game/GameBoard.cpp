@@ -46,8 +46,8 @@ void GameBoard::CreateObstacle()
 	GameEngine::Entity* obstacle = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(obstacle);
 
-	obstacle->SetPos(sf::Vector2f(350.f, 100.f));
-	obstacle->SetSize(sf::Vector2f(150.f, 150.f));
+	obstacle->SetPos(sf::Vector2f(150.f, 350.f));
+	obstacle->SetSize(sf::Vector2f(300.f, 100.f));
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(obstacle->AddComponent<GameEngine::SpriteRenderComponent>());
