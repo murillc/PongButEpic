@@ -3,6 +3,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 #include <Game/Components/BouncePhysicsComponent.h>
+#include <cstdio>
 
 using namespace Game;
 
@@ -48,6 +49,7 @@ void PlayerMovementComponent::Update()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
 			wantedVel.y -= playerVel;
+			
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
@@ -57,4 +59,6 @@ void PlayerMovementComponent::Update()
 	
 
 	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);
+
+	
 }
