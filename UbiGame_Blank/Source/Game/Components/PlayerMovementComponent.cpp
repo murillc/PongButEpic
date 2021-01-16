@@ -2,6 +2,7 @@
 #include "GameEngine\GameEngineMain.h"
 
 #include <SFML/Window/Keyboard.hpp>
+#include <Game/Components/BouncePhysicsComponent.h>
 
 using namespace Game;
 
@@ -35,20 +36,18 @@ void PlayerMovementComponent::Update()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		state = 1;
+		wantedVel.x -= playerVel;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		state = 2;
-	}
-
-	if (state == 1) {
-		wantedVel.x -= playerVel;
-	}
-	else if (state == 2) {
 		wantedVel.x += playerVel;
 	}
-	
 
 	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);
+
+	BouncePhysicsComponent* bouncePhys = GetEntity()->GetComponent<BouncePhysicsComponent>();
+	if (bouncePhys)
+	{
+		bouncePhys->SetVelocity(wantedVel);
+	}
 }
