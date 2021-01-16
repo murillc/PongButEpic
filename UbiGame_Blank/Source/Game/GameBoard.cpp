@@ -5,23 +5,14 @@
 #include "Game\Components\BouncePhysicsComponent.h"
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
-#include "GameEngine\EntitySystem\Components\SoundComponent.h"
-#include "GameEngine\EntitySystem\Components\TextRenderComponent.h"
-
-#include <iostream>
 
 using namespace Game;
 
 GameBoard::GameBoard()
-	: m_player(nullptr), obstacle(nullptr)
+	: m_player1(nullptr), m_player2(nullptr), obstacle(nullptr)
 {
-	CreatePlayer();
+	CreatePlayers();
 	CreateObstacle();
-	CreateTitleScreen();
-	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
-	std::cout << soundPlayer ->LoadSoundFromFile("C:/Users/kurom/OneDrive/Documents/GitHub/PongButEpic/UbiGame_Blank/Resources/sfx/hit.wav");;
-	soundPlayer->PlaySound(0);
-
 }
 
 
@@ -30,28 +21,50 @@ GameBoard::~GameBoard()
 
 }
 
-void GameBoard::CreatePlayer()
+void GameBoard::CreatePlayers()
 {
-	m_player = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 
-	m_player->SetPos(sf::Vector2f(50.f, 50.f));
-	m_player->SetSize(sf::Vector2f(50.f, 50.f));
+
+
+	// Player 1
+	m_player1 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1);
+
+	m_player1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()/2));
+	m_player1->SetSize(sf::Vector2f(50.f, 200.f));
 
 	// Render
-	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
-	
-	spriteRender->SetFillColor(sf::Color::Transparent);
-	spriteRender->SetTexture(GameEngine::eTexture::Player);
+	GameEngine::SpriteRenderComponent* spriteRender1 = static_cast<GameEngine::SpriteRenderComponent*>(m_player1->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	
-	
-	
-	
+	spriteRender1->SetFillColor(sf::Color::Transparent);
+	spriteRender1->SetTexture(GameEngine::eTexture::Player);
 
-	m_player->AddComponent<PlayerMovementComponent>();
+	// Player Movement Component
+	PlayerMovementComponent* playerMove1 = static_cast<PlayerMovementComponent*>(m_player1->AddComponent<PlayerMovementComponent>());
+	playerMove1->setPlayer(1);
 
-	m_player->AddComponent<BouncePhysicsComponent>();
+	m_player1->AddComponent<GameEngine::CollidableComponent>();
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	// Player 2
+	m_player2 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
+
+	m_player2->SetPos(sf::Vector2f(500.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
+	m_player2->SetSize(sf::Vector2f(50.f, 200.f));
+
+	// Render
+	GameEngine::SpriteRenderComponent* spriteRender2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender2->SetFillColor(sf::Color::Transparent);
+	spriteRender2->SetTexture(GameEngine::eTexture::Player);
+
+	// Player Movement Component
+	PlayerMovementComponent* playerMove2 = static_cast<PlayerMovementComponent*>(m_player2->AddComponent<PlayerMovementComponent>());
+	playerMove2->setPlayer(2);
+
+	m_player2->AddComponent<GameEngine::CollidableComponent>();
 }
 
 void GameBoard::CreateObstacle()
@@ -59,8 +72,8 @@ void GameBoard::CreateObstacle()
 	GameEngine::Entity* obstacle = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(obstacle);
 
-	obstacle->SetPos(sf::Vector2f(150.f, 350.f));
-	obstacle->SetSize(sf::Vector2f(300.f, 100.f));
+	obstacle->SetPos(sf::Vector2f(200.f, 250.f));
+	obstacle->SetSize(sf::Vector2f(50.f, 50.f));
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(obstacle->AddComponent<GameEngine::SpriteRenderComponent>());
@@ -68,31 +81,10 @@ void GameBoard::CreateObstacle()
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetTexture(GameEngine::eTexture::Obstacle);
 
-	obstacle->AddComponent<GameEngine::CollidableComponent>();
+	obstacle->AddComponent<BouncePhysicsComponent>();
 }
 
 void GameBoard::Update()
-{
-
+{	
 	
 }
-
-void GameBoard::CreateTitleScreen()
-{
-	GameEngine::Entity* title = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(title);
-
-	GameEngine::TextRenderComponent* titleRender = static_cast<GameEngine::TextRenderComponent*>(title->AddComponent<GameEngine::TextRenderComponent>());
-	
-	float centerX = GameEngine::GameEngineMain::GetInstance()->getWidth();
-	float centerY = GameEngine::GameEngineMain::GetInstance()->getHeight();
-	
-	title->SetPos(sf::Vector2f(centerX/2 - 100.f, 30.f));
-
-
-	titleRender->SetFont("Inter-ExtraBold.ttf");
-	titleRender->SetString("Pong But Epic");
-
-}
-
-

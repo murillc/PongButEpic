@@ -19,12 +19,11 @@ namespace Game
 		bool IsGameOver() { return false; }
 
 	private:
-		void CreatePlayer();
+		void CreatePlayers();
 		void CreateObstacle();
-		void CreateTitleScreen();
-		GameEngine::Entity* m_player;
+		GameEngine::Entity* m_player1;
+		GameEngine::Entity* m_player2;
 		GameEngine::Entity* obstacle;
-		GameEngine::Entity* title;
 	};
 
 }

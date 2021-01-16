@@ -12,8 +12,8 @@ namespace Game
 		virtual void Update() override;
 		virtual void OnAddToWorld() override;
 
-		int state;
-
+		virtual void setPlayer(int player) { m_player = player; }
 	private:
+		int m_player;
 	};
 }
