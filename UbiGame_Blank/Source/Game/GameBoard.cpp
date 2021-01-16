@@ -2,6 +2,7 @@
 
 #include "GameEngine/GameEngineMain.h"
 #include "Game\Components\PlayerMovementComponent.h"
+#include "Game\Components\BouncePhysicsComponent.h"
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
 
@@ -37,7 +38,7 @@ void GameBoard::CreatePlayer()
 
 	m_player->AddComponent<PlayerMovementComponent>();
 
-	m_player->AddComponent<GameEngine::CollidablePhysicsComponent>();
+	m_player->AddComponent<BouncePhysicsComponent>();
 }
 
 void GameBoard::CreateObstacle()

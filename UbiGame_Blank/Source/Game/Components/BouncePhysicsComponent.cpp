@@ -5,50 +5,37 @@
 
 using namespace Game;
 
-PlayerMovementComponent::PlayerMovementComponent()
+BouncePhysicsComponent::BouncePhysicsComponent()
 {
-	state = 0;
 }
 
 
-PlayerMovementComponent::~PlayerMovementComponent()
+BouncePhysicsComponent::~BouncePhysicsComponent()
 {
 
 
 }
 
-void PlayerMovementComponent::OnAddToWorld()
+void BouncePhysicsComponent::OnAddToWorld()
 {
 	__super::OnAddToWorld();
 }
 
 
-void PlayerMovementComponent::Update()
+void BouncePhysicsComponent::Update()
 {
-	__super::Update();
-
+	// Get delta time from the previous frame
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
 
-	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
-
-	float playerVel = 100.f;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (dt > 0.f)
 	{
-		state = 1;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		state = 2;
+		// Set the wanted velocity as current
+		m_velocity = m_wantedVelocity;
+
+		// V = Dx / Dt => Dx = V * Dt
+		sf::Vector2f deltaVelocity = dt * m_velocity;
+		GetEntity()->SetPos(GetEntity()->GetPos() + deltaVelocity);
 	}
 
-	if (state == 1) {
-		wantedVel.x -= playerVel * dt;
-	}
-	else if (state == 2) {
-		wantedVel.x += playerVel * dt;
-	}
-
-
-	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);
+	__super::Update();
 }
