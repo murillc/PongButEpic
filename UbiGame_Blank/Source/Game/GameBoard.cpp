@@ -5,6 +5,8 @@
 #include "Game\Components\BouncePhysicsComponent.h"
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
+#include <GameEngine/EntitySystem/Components/SoundComponent.h>
+#include <iostream>
 
 using namespace Game;
 
@@ -23,9 +25,6 @@ GameBoard::~GameBoard()
 
 void GameBoard::CreatePlayers()
 {
-
-
-
 	// Player 1
 	m_player1 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1);
@@ -82,6 +81,9 @@ void GameBoard::CreateObstacle()
 	spriteRender->SetTexture(GameEngine::eTexture::Obstacle);
 
 	obstacle->AddComponent<BouncePhysicsComponent>();
+
+	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(obstacle->AddComponent<GameEngine::SoundComponent>());
+	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/crmur/source/repos/HackersNest/UbiGame_Blank/Resources/sfx/hit.wav");
 }
 
 void GameBoard::Update()
