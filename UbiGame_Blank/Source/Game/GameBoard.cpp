@@ -6,7 +6,6 @@
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
 
-
 using namespace Game;
 
 GameBoard::GameBoard()
@@ -24,11 +23,14 @@ GameBoard::~GameBoard()
 
 void GameBoard::CreatePlayers()
 {
+
+
+
 	// Player 1
 	m_player1 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1);
 
-	m_player1->SetPos(sf::Vector2f(50.f, 250.f));
+	m_player1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()/2));
 	m_player1->SetSize(sf::Vector2f(50.f, 200.f));
 
 	// Render
@@ -43,11 +45,13 @@ void GameBoard::CreatePlayers()
 
 	m_player1->AddComponent<GameEngine::CollidableComponent>();
 
+	///////////////////////////////////////////////////////////////////////////////////
+
 	// Player 2
 	m_player2 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
 
-	m_player2->SetPos(sf::Vector2f(500.f, 250.f));
+	m_player2->SetPos(sf::Vector2f(500.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
 	m_player2->SetSize(sf::Vector2f(50.f, 200.f));
 
 	// Render
