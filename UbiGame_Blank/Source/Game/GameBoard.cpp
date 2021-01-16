@@ -6,7 +6,9 @@
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
 #include "GameEngine\EntitySystem\Components\SoundComponent.h"
+#include "GameEngine\EntitySystem\Components\TextRenderComponent.h"
 
+#include <iostream>
 
 using namespace Game;
 
@@ -15,8 +17,10 @@ GameBoard::GameBoard()
 {
 	CreatePlayer();
 	CreateObstacle();
-
-
+	CreateTitleScreen();
+	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
+	std::cout << soundPlayer ->LoadSoundFromFile("C:/Users/kurom/OneDrive/Documents/GitHub/PongButEpic/UbiGame_Blank/Resources/sfx/hit.wav");;
+	soundPlayer->PlaySound(0);
 
 }
 
@@ -36,12 +40,17 @@ void GameBoard::CreatePlayer()
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
-
+	
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetTexture(GameEngine::eTexture::Player);
 
+	
+	
+	
+	
+
 	m_player->AddComponent<PlayerMovementComponent>();
-	//m_player->AddComponent<SoundComponent>();
+
 	m_player->AddComponent<BouncePhysicsComponent>();
 }
 
@@ -63,7 +72,27 @@ void GameBoard::CreateObstacle()
 }
 
 void GameBoard::Update()
-{	
+{
+
 	
 }
+
+void GameBoard::CreateTitleScreen()
+{
+	GameEngine::Entity* title = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(title);
+
+	GameEngine::TextRenderComponent* titleRender = static_cast<GameEngine::TextRenderComponent*>(title->AddComponent<GameEngine::TextRenderComponent>());
+	
+	float centerX = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	float centerY = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	
+	title->SetPos(sf::Vector2f(centerX/2 - 100.f, 30.f));
+
+
+	titleRender->SetFont("Inter-ExtraBold.ttf");
+	titleRender->SetString("Pong But Epic");
+
+}
+
 

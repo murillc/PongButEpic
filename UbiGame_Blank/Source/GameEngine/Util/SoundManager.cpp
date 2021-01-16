@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <algorithm>
+#include <iostream>
 
 using namespace GameEngine;
 
@@ -45,6 +46,7 @@ SoundManager::SoundId SoundManager::LoadSoundFromFile(std::string const& filenam
 				m_loadedSounds.push_back(resourceId);
 			}
 		}
+		std::cout << resourceId;
 		return resourceId;
 	}
 

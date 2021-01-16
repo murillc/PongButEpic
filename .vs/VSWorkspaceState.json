@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\UbiGame_Blank",
+    "\\UbiGame_Blank\\Resources",
+    "\\UbiGame_Blank\\Source",
+    "\\UbiGame_Blank\\Source\\Game"
   ],
+  "SelectedNode": "\\UbiGame_Blank\\Resources",
   "PreviewInSolutionExplorer": false
 }

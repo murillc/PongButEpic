@@ -21,8 +21,10 @@ namespace Game
 	private:
 		void CreatePlayer();
 		void CreateObstacle();
+		void CreateTitleScreen();
 		GameEngine::Entity* m_player;
 		GameEngine::Entity* obstacle;
+		GameEngine::Entity* title;
 	};
 
 }
