@@ -7,7 +7,7 @@
 
 #include "GameEngine\Util\CollisionManager.h"
 #include "GameEngine\EntitySystem\Entity.h"
-
+#include "Game\Components\ScoreComponent.h"
 #include <vector>
 #include <math.h>
 
@@ -95,7 +95,7 @@ void BouncePhysicsComponent::Update()
 				else m_wantedVelocity.x = m_maxSpeed * cos(bounceAngle);
 				m_wantedVelocity.y = m_maxSpeed * -sin(bounceAngle);
 
-				printf("%f, %f, %f\n", bounceAngle, cos(bounceAngle), sin(bounceAngle));
+				//printf("%f, %f, %f\n", bounceAngle, cos(bounceAngle), sin(bounceAngle));
 
 
 				GetEntity()->GetComponent<GameEngine::SoundComponent>()->PlaySound(0);
@@ -104,6 +104,21 @@ void BouncePhysicsComponent::Update()
 				
 				m_wantedVelocity.y = -m_wantedVelocity.y;
 
+			}
+			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::LeftNet) {
+				
+				GetEntity()->GetComponent<ScoreComponent>()->increaseScore(0);
+				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
+				//std::cout << "\nLeft Scored";
+
+				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));
+			}
+			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::RightNet) {
+
+				GetEntity()->GetComponent<ScoreComponent>()->increaseScore(1);
+				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
+				//std::cout << "\nRight Scored";
+				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));
 			}
 			
 

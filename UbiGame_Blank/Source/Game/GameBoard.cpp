@@ -6,6 +6,7 @@
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
 #include <GameEngine/EntitySystem/Components/SoundComponent.h>
+#include <Game\Components\ScoreComponent.h>
 #include <iostream>
 
 using namespace Game;
@@ -85,13 +86,17 @@ void GameBoard::CreateObstacle()
 	spriteRender->SetTexture(GameEngine::eTexture::Obstacle);
 
 	obstacle->AddComponent<BouncePhysicsComponent>();
+	obstacle->AddComponent<ScoreComponent>();
 
 	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(obstacle->AddComponent<GameEngine::SoundComponent>());
-	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/crmur/source/repos/HackersNest/UbiGame_Blank/Resources/sfx/hit.wav");
+	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/kurom/OneDrive/Documents/GitHub/PongButEpic/UbiGame_Blank/Resources/sfx/hit.wav");
 }
 
 void Game::GameBoard::CreateWalls()
 {
+	float width = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	float height = GameEngine::GameEngineMain::GetInstance()->getHeight();
+
 	GameEngine::Entity* wallNorth = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallNorth);
 
@@ -102,12 +107,10 @@ void Game::GameBoard::CreateWalls()
 	// Render
 	GameEngine::RenderComponent* renderN = static_cast<GameEngine::RenderComponent*>(wallNorth->AddComponent<GameEngine::RenderComponent>());
 
-	renderN->SetFillColor(sf::Color::Green);
-
+	renderN->SetFillColor(sf::Color::White);
 	wallNorth->AddComponent<GameEngine::CollidableComponent>();
 
-
-
+	/////////////////////////
 
 	GameEngine::Entity* wallSouth = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallSouth);
@@ -119,10 +122,73 @@ void Game::GameBoard::CreateWalls()
 	// Render
 	GameEngine::RenderComponent* renderS = static_cast<GameEngine::RenderComponent*>(wallSouth->AddComponent<GameEngine::RenderComponent>());
 
-	renderS->SetFillColor(sf::Color::Green);
+	renderS->SetFillColor(sf::Color::White);
 
 	wallSouth->AddComponent<GameEngine::CollidableComponent>();
+
+
+	/////////////////////////
+
+	GameEngine::Entity* netEast = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(netEast);
+
+	netEast->SetPos(sf::Vector2f(width, 0.f));
+	netEast->SetSize(sf::Vector2f(50.f, 2000.f));
+	netEast->SetType(GameEngine::EntityType::RightNet);
+
+	// Render
+	GameEngine::RenderComponent* renderE = static_cast<GameEngine::RenderComponent*>(netEast->AddComponent<GameEngine::RenderComponent>());
+	ScoreComponent* score1 = static_cast<ScoreComponent*>(netEast->AddComponent<ScoreComponent>());
+
+	renderE->SetFillColor(sf::Color::Red);
+
+	netEast->AddComponent<GameEngine::CollidableComponent>();
+	score1->setPlayer(0);
+
+
+
+
+	/////////////////////////
+
+	GameEngine::Entity* netWest = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(netWest);
+
+	netWest->SetPos(sf::Vector2f(0.f, 0.f));
+	netWest->SetSize(sf::Vector2f(50.f, 2000.f));
+	netWest->SetType(GameEngine::EntityType::LeftNet);
+
+	// Render
+	GameEngine::RenderComponent* renderW = static_cast<GameEngine::RenderComponent*>(netWest->AddComponent<GameEngine::RenderComponent>());
+	ScoreComponent* score2 = static_cast<ScoreComponent*>(netWest->AddComponent<ScoreComponent>());
+	
+	renderW->SetFillColor(sf::Color::Red);
+
+	netWest->AddComponent<GameEngine::CollidableComponent>();
+	score2->setPlayer(1);
+	
+	
 }
+
+
+void GameBoard::CreateText()
+{
+	GameEngine::Entity* title = new GameEngine::Entity();
+	GameEngine::Entity* p1Score = new GameEngine::Entity();
+	GameEngine::Entity* p2Score = new GameEngine::Entity();
+
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(title);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(p1Score);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(p2Score);
+
+
+	// TITLE
+	GameEngine::TextRenderComponent* titleRender = static_cast<GameEngine::TextRenderComponent*>(title->AddComponent<GameEngine::TextRenderComponent>());
+	titleRender->SetFont("Inter-ExtraBold.ttf");
+	titleRender->SetString("Pong But Epic");
+
+
+}
+
 
 void GameBoard::Update()
 {	

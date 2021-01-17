@@ -9,7 +9,9 @@ namespace GameEngine
 		enum type {
 			None = -1,
 			Walls,
-			Paddles
+			Paddles,
+			LeftNet,
+			RightNet,
 		};
 	}
 	

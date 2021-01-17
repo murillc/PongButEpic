@@ -9,18 +9,15 @@ using namespace Game;
 
 ScoreComponent::ScoreComponent()
 {	
-
 	//GetEntity()->SetPos(sf::Vector2f(350.f, 350.f));
 	int m_score = 0;
+	//int m_player = -1;
 	
-
-
 }
-
 
 ScoreComponent::~ScoreComponent()
 {
-	
+
 }
 
 void ScoreComponent::OnAddToWorld()
@@ -31,7 +28,8 @@ void ScoreComponent::OnAddToWorld()
 
 void ScoreComponent::Update()
 {
-	GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString(std::to_string(this->getScore()));
+	
+	//GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString(std::to_string(this->getScore()));
 }
 
 
