@@ -15,7 +15,8 @@ using namespace Game;
 
 BouncePhysicsComponent::BouncePhysicsComponent()
 {
-	m_wantedVelocity = sf::Vector2f(250.f, 0.f);
+	m_maxSpeed = 500.f;
+	m_wantedVelocity = sf::Vector2f(m_maxSpeed, 0.f);
 }
 
 
@@ -80,23 +81,31 @@ void BouncePhysicsComponent::Update()
 
 			GetEntity()->SetPos(pos);
 
-			// Relative Y Intersect from paddle = Paddle Y pos - Ball Position
-			float relativeYIntersect = (colComponent->GetEntity()->GetPos().y) - GetEntity()->GetPos().y;
+			if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::Paddles) {
+				// Relative Y Intersect from paddle = Paddle Y pos - Ball Position
+				float relativeYIntersect = (colComponent->GetEntity()->GetPos().y) - GetEntity()->GetPos().y;
 
-			// Normalize it
-			float normalizedRelYInt = (relativeYIntersect / ((colComponent->GetWorldAABB().height + 50)/2));
+				// Normalize it
+				float normalizedRelYInt = (relativeYIntersect / ((colComponent->GetWorldAABB().height * 1.1) / 2));
 
-			float bounceAngle = normalizedRelYInt * 3.14/180.f * 65.f;
-
-
-			if (GetEntity()->GetPos().x > 400) m_wantedVelocity.x = -250.f * cos(bounceAngle);
-			else m_wantedVelocity.x = 250.f * cos(bounceAngle);
-			m_wantedVelocity.y = 250.f * -sin(bounceAngle);
-
-			printf("%f, %f, %f\n", bounceAngle, cos(bounceAngle), sin(bounceAngle));
+				float bounceAngle = normalizedRelYInt * 3.14 / 180.f * 65.f;
 
 
-			GetEntity()->GetComponent<GameEngine::SoundComponent>()->PlaySound(0);
+				if (GetEntity()->GetPos().x > 400) m_wantedVelocity.x = -m_maxSpeed * cos(bounceAngle);
+				else m_wantedVelocity.x = m_maxSpeed * cos(bounceAngle);
+				m_wantedVelocity.y = m_maxSpeed * -sin(bounceAngle);
+
+				printf("%f, %f, %f\n", bounceAngle, cos(bounceAngle), sin(bounceAngle));
+
+
+				GetEntity()->GetComponent<GameEngine::SoundComponent>()->PlaySound(0);
+			}
+			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::Walls) {
+				
+				m_wantedVelocity.y = -m_wantedVelocity.y;
+
+			}
+			
 
 			
 		}

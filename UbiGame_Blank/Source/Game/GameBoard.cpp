@@ -11,10 +11,11 @@
 using namespace Game;
 
 GameBoard::GameBoard()
-	: m_player1(nullptr), m_player2(nullptr), obstacle(nullptr)
+	: m_player1(nullptr), m_player2(nullptr), obstacle(nullptr), wallNorth(nullptr)
 {
 	CreatePlayers();
 	CreateObstacle();
+	CreateWalls();
 }
 
 
@@ -30,7 +31,9 @@ void GameBoard::CreatePlayers()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1);
 
 	m_player1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()/2));
-	m_player1->SetSize(sf::Vector2f(50.f, 200.f));
+	m_player1->SetSize(sf::Vector2f(25.f, 100.f));
+	m_player1->SetType(GameEngine::EntityType::Paddles);
+
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender1 = static_cast<GameEngine::SpriteRenderComponent*>(m_player1->AddComponent<GameEngine::SpriteRenderComponent>());
@@ -42,7 +45,7 @@ void GameBoard::CreatePlayers()
 	PlayerMovementComponent* playerMove1 = static_cast<PlayerMovementComponent*>(m_player1->AddComponent<PlayerMovementComponent>());
 	playerMove1->setPlayer(1);
 
-	m_player1->AddComponent<GameEngine::CollidableComponent>();
+	m_player1->AddComponent<GameEngine::CollidablePhysicsComponent>();
 
 	///////////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +53,9 @@ void GameBoard::CreatePlayers()
 	m_player2 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
 
-	m_player2->SetPos(sf::Vector2f(500.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
-	m_player2->SetSize(sf::Vector2f(50.f, 200.f));
+	m_player2->SetPos(sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->getWidth() - 50.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
+	m_player2->SetSize(sf::Vector2f(25.f, 100.f));
+	m_player2->SetType(GameEngine::EntityType::Paddles);
 
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2->AddComponent<GameEngine::SpriteRenderComponent>());
@@ -63,7 +67,7 @@ void GameBoard::CreatePlayers()
 	PlayerMovementComponent* playerMove2 = static_cast<PlayerMovementComponent*>(m_player2->AddComponent<PlayerMovementComponent>());
 	playerMove2->setPlayer(2);
 
-	m_player2->AddComponent<GameEngine::CollidableComponent>();
+	m_player2->AddComponent<GameEngine::CollidablePhysicsComponent>();
 }
 
 void GameBoard::CreateObstacle()
@@ -84,6 +88,40 @@ void GameBoard::CreateObstacle()
 
 	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(obstacle->AddComponent<GameEngine::SoundComponent>());
 	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/crmur/source/repos/HackersNest/UbiGame_Blank/Resources/sfx/hit.wav");
+}
+
+void Game::GameBoard::CreateWalls()
+{
+	GameEngine::Entity* wallNorth = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallNorth);
+
+	wallNorth->SetPos(sf::Vector2f(0.f, 0.f));
+	wallNorth->SetSize(sf::Vector2f(2000.f, 50.f));
+	wallNorth->SetType(GameEngine::EntityType::Walls);
+
+	// Render
+	GameEngine::RenderComponent* renderN = static_cast<GameEngine::RenderComponent*>(wallNorth->AddComponent<GameEngine::RenderComponent>());
+
+	renderN->SetFillColor(sf::Color::Green);
+
+	wallNorth->AddComponent<GameEngine::CollidableComponent>();
+
+
+
+
+	GameEngine::Entity* wallSouth = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallSouth);
+
+	wallSouth->SetPos(sf::Vector2f(0.f, 600.f));
+	wallSouth->SetSize(sf::Vector2f(2000.f, 50.f));
+	wallSouth->SetType(GameEngine::EntityType::Walls);
+
+	// Render
+	GameEngine::RenderComponent* renderS = static_cast<GameEngine::RenderComponent*>(wallSouth->AddComponent<GameEngine::RenderComponent>());
+
+	renderS->SetFillColor(sf::Color::Green);
+
+	wallSouth->AddComponent<GameEngine::CollidableComponent>();
 }
 
 void GameBoard::Update()

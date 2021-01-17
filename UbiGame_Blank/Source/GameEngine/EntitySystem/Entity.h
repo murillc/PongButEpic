@@ -5,6 +5,14 @@
 
 namespace GameEngine
 {
+	namespace EntityType {
+		enum type {
+			None = -1,
+			Walls,
+			Paddles
+		};
+	}
+	
 	class Entity
 	{
 	public:
@@ -20,10 +28,13 @@ namespace GameEngine
 		sf::Vector2f GetPos()  const { return m_pos; }
 		sf::Vector2f GetSize() const { return m_size; }
 		float		 GetRot()  const { return m_rotation; }
+		int			 GetType() const { return m_type; }
+
 		
 		void		 SetPos(sf::Vector2f pos)   { m_pos = pos; }
 		void		 SetSize(sf::Vector2f size) { m_size = size; }
 		void	     SetRotation(float rotation) { m_rotation = rotation; }		
+		void		 SetType(int type) { m_type = type;  }
 
 		//Components
 		template <class T>
@@ -71,5 +82,6 @@ namespace GameEngine
 		sf::Vector2f		   m_pos;
 		sf::Vector2f		   m_size;		
 		float				   m_rotation;
+		int					   m_type;
 	};
 }

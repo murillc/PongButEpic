@@ -33,7 +33,7 @@ void PlayerMovementComponent::Update()
 
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 
-	float playerVel = 0.1f;
+	float playerVel = 0.25f;
 
 	if (m_player == 1) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
