@@ -23,18 +23,20 @@ namespace Game
 		void CreateObstacle();
 		void CreateWalls();
 		void CreateText();
-		GameEngine::Entity* m_player1_1;
-		GameEngine::Entity* m_player1_2;
+		void CreateBg();
+		void CreateTimer();
+		void CreateScoreDisplay();
 
-		GameEngine::Entity* m_player2_1;
-		GameEngine::Entity* m_player2_2;
-
+		GameEngine::Entity* m_player1;
+		GameEngine::Entity* m_player2;
+		GameEngine::Entity* scoreCounter;
 		GameEngine::Entity* wallNorth;
 		GameEngine::Entity* wallSouth;
 		GameEngine::Entity* wallWest;
 		GameEngine::Entity* wallEast;
-
+		
 		GameEngine::Entity* obstacle;
+		GameEngine::Entity* timer;
 	};
 
 }
