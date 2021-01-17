@@ -2,7 +2,8 @@
 # Pong But Epic
 `Coded at HTN 2020++`
 
-A game made using Ubisoft Toronto's custom Hackers Nest API for creating video games in C++.
+A twist on pong made using Ubisoft Toronto's custom Hackers Nest API for creating video games in C++.
+The goal of the game is to let the ball into your goal, and you only have 60 seconds to do so.
 
 Themes implemented:
 * One button game
