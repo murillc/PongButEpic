@@ -6,25 +6,23 @@
 #include "GameEngine\EntitySystem\Components\SpriteRenderComponent.h"
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
 #include <GameEngine/EntitySystem/Components/SoundComponent.h>
-#include <GameEngine/EntitySystem/Components/TextRenderComponent.h>
 #include <Game\Components\ScoreComponent.h>
-#include <Game\Components\ScoreDisplay.h>
-#include <Game\Components\Timer.h>
 #include <iostream>
 
 using namespace Game;
 
 GameBoard::GameBoard()
-	: m_player1(nullptr), m_player2(nullptr), obstacle(nullptr), wallNorth(nullptr)
+	: m_player1_1(nullptr)
+	, m_player1_2(nullptr)
+	, m_player2_1(nullptr)
+	, m_player2_2(nullptr)
+	, obstacle(nullptr)
+	, wallNorth(nullptr)
 {
-	
 	CreatePlayers();
 	CreateObstacle();
 	CreateWalls();
 	CreateText();
-	CreateBg();
-	CreateTimer();
-	CreateScoreDisplay();
 }
 
 
@@ -34,66 +32,98 @@ GameBoard::~GameBoard()
 }
 
 void GameBoard::CreatePlayers()
-{	
+{
+	// Player 1 First Paddle
+	m_player1_1 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1_1);
 
-	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
-	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
-	const float paddleHeight = h - 300.f;
-	// Player 1
-	m_player1 = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1);
-
-	m_player1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()/2));
-	m_player1->SetSize(sf::Vector2f(25.f, paddleHeight));
-	m_player1->SetType(GameEngine::EntityType::Paddles);
-
+	m_player1_1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()));
+	m_player1_1->SetSize(sf::Vector2f(25.f, 500.f));
+	m_player1_1->SetType(GameEngine::EntityType::Paddles);
 
 	// Render
-	GameEngine::SpriteRenderComponent* spriteRender1 = static_cast<GameEngine::SpriteRenderComponent*>(m_player1->AddComponent<GameEngine::SpriteRenderComponent>());
+	GameEngine::SpriteRenderComponent* spriteRender1_1 = static_cast<GameEngine::SpriteRenderComponent*>(m_player1_1->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	spriteRender1->SetFillColor(sf::Color::Transparent);
-	spriteRender1->SetTexture(GameEngine::eTexture::Player);
+	spriteRender1_1->SetFillColor(sf::Color::Transparent);
+	spriteRender1_1->SetTexture(GameEngine::eTexture::Player);
 
 	// Player Movement Component
-	PlayerMovementComponent* playerMove1 = static_cast<PlayerMovementComponent*>(m_player1->AddComponent<PlayerMovementComponent>());
-	playerMove1->setPlayer(1);
+	PlayerMovementComponent* playerMove1_1 = static_cast<PlayerMovementComponent*>(m_player1_1->AddComponent<PlayerMovementComponent>());
+	playerMove1_1->setPlayer(1);
 
-	m_player1->AddComponent<GameEngine::CollidablePhysicsComponent>();
+	m_player1_1->AddComponent<GameEngine::CollidablePhysicsComponent>();
+
+	// Second Paddle
+	m_player1_2 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1_2);
+
+	m_player1_2->SetSize(sf::Vector2f(25.f, 500.f));
+	m_player1_2->SetPos(sf::Vector2f(50.f, 0.f));
+	m_player1_2->SetType(GameEngine::EntityType::Paddles);
+
+	// Render
+	GameEngine::SpriteRenderComponent* spriteRender1_2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player1_2->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender1_2->SetFillColor(sf::Color::Transparent);
+	spriteRender1_2->SetTexture(GameEngine::eTexture::Player);
+
+	// Player Movement Component
+	PlayerMovementComponent* playerMove1_2 = static_cast<PlayerMovementComponent*>(m_player1_2->AddComponent<PlayerMovementComponent>());
+	playerMove1_2->setPlayer(1);
+
+	m_player1_2->AddComponent<GameEngine::CollidablePhysicsComponent>();
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	// Player 2
-	m_player2 = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
+	// Player 2 First Paddle
+	m_player2_1 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2_1);
 
-	m_player2->SetPos(sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->getWidth() - 50.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
-	m_player2->SetSize(sf::Vector2f(25.f, paddleHeight));
-	m_player2->SetType(GameEngine::EntityType::Paddles);
+	m_player2_1->SetPos(sf::Vector2f(700.f, GameEngine::GameEngineMain::GetInstance()->getHeight()));
+	m_player2_1->SetSize(sf::Vector2f(25.f, 500.f));
+	m_player2_1->SetType(GameEngine::EntityType::Paddles);
 
 	// Render
-	GameEngine::SpriteRenderComponent* spriteRender2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2->AddComponent<GameEngine::SpriteRenderComponent>());
+	GameEngine::SpriteRenderComponent* spriteRender2_1 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2_1->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	spriteRender2->SetFillColor(sf::Color::Transparent);
-	spriteRender2->SetTexture(GameEngine::eTexture::Player);
-
+	spriteRender2_1->SetFillColor(sf::Color::Transparent);
+	spriteRender2_1->SetTexture(GameEngine::eTexture::Player);
 
 	// Player Movement Component
-	PlayerMovementComponent* playerMove2 = static_cast<PlayerMovementComponent*>(m_player2->AddComponent<PlayerMovementComponent>());
-	playerMove2->setPlayer(2);
+	PlayerMovementComponent* playerMove2_1 = static_cast<PlayerMovementComponent*>(m_player2_1->AddComponent<PlayerMovementComponent>());
+	playerMove2_1->setPlayer(2);
 
-	m_player2->AddComponent<GameEngine::CollidablePhysicsComponent>();
+	m_player2_1->AddComponent<GameEngine::CollidablePhysicsComponent>();
+
+	// Second Paddle
+	m_player2_2 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2_2);
+
+	m_player2_2->SetSize(sf::Vector2f(25.f, 500.f));
+	m_player2_2->SetPos(sf::Vector2f(700.f, 0.f));
+	m_player2_2->SetType(GameEngine::EntityType::Paddles);
+
+	// Render
+	GameEngine::SpriteRenderComponent* spriteRender2_2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2_2->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender2_2->SetFillColor(sf::Color::Transparent);
+	spriteRender2_2->SetTexture(GameEngine::eTexture::Player);
+
+	// Player Movement Component
+	PlayerMovementComponent* playerMove2_2 = static_cast<PlayerMovementComponent*>(m_player2_2->AddComponent<PlayerMovementComponent>());
+	playerMove2_2->setPlayer(2);
+
+	m_player2_2->AddComponent<GameEngine::CollidablePhysicsComponent>();
 }
 
 void GameBoard::CreateObstacle()
 {
-	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
-	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
 	GameEngine::Entity* obstacle = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(obstacle);
 
 	obstacle->SetPos(sf::Vector2f(200.f, 250.f));
 	obstacle->SetSize(sf::Vector2f(50.f, 50.f));
-	
+
 	// Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(obstacle->AddComponent<GameEngine::SpriteRenderComponent>());
 
@@ -102,8 +132,6 @@ void GameBoard::CreateObstacle()
 
 	obstacle->AddComponent<BouncePhysicsComponent>();
 	obstacle->AddComponent<ScoreComponent>();
-
-
 
 	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(obstacle->AddComponent<GameEngine::SoundComponent>());
 	std::cout << soundPlayer->LoadSoundFromFile("Resources/sfx/hit.wav");
@@ -117,8 +145,8 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::Entity* wallNorth = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallNorth);
 
-	wallNorth->SetPos(sf::Vector2f(0.f, 0.f));
-	wallNorth->SetSize(sf::Vector2f(2000.f, 50.f));
+	wallNorth->SetSize(sf::Vector2f(600.f, 50.f));
+	wallNorth->SetPos(sf::Vector2f(wallNorth->GetSize().x / 2 + 75.f, 0.f));
 	wallNorth->SetType(GameEngine::EntityType::Walls);
 
 	// Render
@@ -132,8 +160,8 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::Entity* wallSouth = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallSouth);
 
-	wallSouth->SetPos(sf::Vector2f(0.f, 600.f));
-	wallSouth->SetSize(sf::Vector2f(2000.f, 50.f));
+	wallSouth->SetSize(sf::Vector2f(600.f, 50.f));
+	wallSouth->SetPos(sf::Vector2f(wallSouth->GetSize().x/2 + 75.f, 600.f));
 	wallSouth->SetType(GameEngine::EntityType::Walls);
 
 	// Render
@@ -157,7 +185,7 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::RenderComponent* renderE = static_cast<GameEngine::RenderComponent*>(netEast->AddComponent<GameEngine::RenderComponent>());
 	ScoreComponent* score1 = static_cast<ScoreComponent*>(netEast->AddComponent<ScoreComponent>());
 
-	renderE->SetFillColor(sf::Color::Transparent);
+	renderE->SetFillColor(sf::Color::Red);
 
 	netEast->AddComponent<GameEngine::CollidableComponent>();
 	score1->setPlayer(0);
@@ -178,7 +206,7 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::RenderComponent* renderW = static_cast<GameEngine::RenderComponent*>(netWest->AddComponent<GameEngine::RenderComponent>());
 	ScoreComponent* score2 = static_cast<ScoreComponent*>(netWest->AddComponent<ScoreComponent>());
 	
-	renderW->SetFillColor(sf::Color::Transparent);
+	renderW->SetFillColor(sf::Color::Red);
 
 	netWest->AddComponent<GameEngine::CollidableComponent>();
 	score2->setPlayer(1);
@@ -190,11 +218,11 @@ void Game::GameBoard::CreateWalls()
 void GameBoard::CreateText()
 {
 	GameEngine::Entity* title = new GameEngine::Entity();
-	GameEngine::Entity* scoreCounter = new GameEngine::Entity();
+	GameEngine::Entity* p1Score = new GameEngine::Entity();
 	GameEngine::Entity* p2Score = new GameEngine::Entity();
 
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(title);
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(scoreCounter);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(p1Score);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(p2Score);
 
 
@@ -203,40 +231,21 @@ void GameBoard::CreateText()
 	titleRender->SetFont("Inter-ExtraBold.ttf");
 	titleRender->SetString("Pong But Epic");
 	titleRender->SetColor(sf::Color::Black);
-	titleRender->SetCharacterSizePixels(20);
-	title->SetPos(sf::Vector2f(330.f, 0.f));
 
 	// PLAYER 1 SCORE DISPLAY
-	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(scoreCounter->AddComponent<GameEngine::TextRenderComponent>());
-	scoreCounter->AddComponent<ScoreComponent>();
+	GameEngine::TextRenderComponent* p1ScoreRender = static_cast<GameEngine::TextRenderComponent*>(p1Score->AddComponent<GameEngine::TextRenderComponent>());
+	p1Score->AddComponent<ScoreComponent>();
 
-	scoreCounter->SetPos(sf::Vector2f(400.f, 400.f));
-	scoreRender->SetFont("Inter-ExtraBold.ttf");
-	
+	p1Score->SetPos(sf::Vector2f(400.f, 400.f));
+	p1ScoreRender->SetFont("Inter-ExtraBold.ttf");
 	//p1ScoreRender->SetString("Pepega");
 	// PLAYER 2 SCORE DISPLAY
 
-}
 
-void GameBoard::CreateBg()
-{
-	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
-	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
-	GameEngine::Entity* bg = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(bg);
+	
 
-	bg->SetPos(sf::Vector2f(w/2, h/2));
-	bg->SetSize(sf::Vector2f(800.f, 600.f));
 
-	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>(bg->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	render->SetTexture(GameEngine::eTexture::Background);
-	render->SetFillColor(sf::Color::Transparent);
-	render->SetZLevel(-1);
-			
-}
-
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
@@ -245,49 +254,17 @@ void GameBoard::CreateTimer()
 	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
 	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
 	GameEngine::Entity* timer = new GameEngine::Entity();
-=======
-void GameBoard::CreateTimer()
-{
-	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
-	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
-	GameEngine::Entity* timer = new GameEngine::Entity();
-
->>>>>>> parent of cc889b3... Merge branch 'carlos' into felix
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(timer);
 	GameEngine::TextRenderComponent* timerRender = static_cast<GameEngine::TextRenderComponent*>(timer->AddComponent<GameEngine::TextRenderComponent>());
 	
 	timer->AddComponent<Timer>();
-<<<<<<< HEAD
 	timer->SetPos(sf::Vector2f(w/2-50.f, 550.f));
 	timerRender->SetFont("Inter-ExtraBold.ttf");
 	timerRender->SetCharacterSizePixels(15);
 	
 >>>>>>> parent of 120a492... gmae
-=======
-	timer->AddComponent<BouncePhysicsComponent>();
-
-	timer->SetPos(sf::Vector2f(w/2-50.f, 550.f));
-	timer->SetType(GameEngine::EntityType::Timer);
-	timerRender->SetFont("Inter-ExtraBold.ttf");
-	timerRender->SetCharacterSizePixels(15);
-	
->>>>>>> parent of cc889b3... Merge branch 'carlos' into felix
 }
 
-void GameBoard::CreateScoreDisplay()
-{
-	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
-	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
-	GameEngine::Entity* scoreCounter = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(scoreCounter);
-	
-	//GameEngine::TextRenderComponent* timerRender = static_cast<GameEngine::TextRenderComponent*>(scoreCounter->AddComponent<GameEngine::TextRenderComponent>());
-	scoreCounter->AddComponent<ScoreComponent>();
-	scoreCounter->AddComponent<ScoreDisplay>();
-	
-	scoreCounter->SetPos(sf::Vector2f(w / 2 - 50.f, 300.f));
-	
-}
 
 void GameBoard::Update()
 {	
