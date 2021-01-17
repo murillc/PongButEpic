@@ -38,7 +38,7 @@ void BouncePhysicsComponent::Update()
 {
 	// Get delta time from the previous frame
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
-	float mult = 4;
+	
 
 
 	if (dt > 0.f)
@@ -50,7 +50,7 @@ void BouncePhysicsComponent::Update()
 		// V = Dx / Dt => Dx = V * Dt
 		sf::Vector2f deltaVelocity = m_velocity * dt * getTimeAcc()  ;
 		GetEntity()->SetPos(GetEntity()->GetPos() + deltaVelocity);
-		printf("\n%f -- %f", dt, getTimeAcc());
+		
 		incrementSpeed(dt);
 
 	}

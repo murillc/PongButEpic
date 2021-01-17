@@ -24,15 +24,19 @@ namespace Game
 		void CreateWalls();
 		void CreateText();
 		void CreateBg();
+		void CreateTimer();
+		void CreateScoreDisplay();
+
 		GameEngine::Entity* m_player1;
 		GameEngine::Entity* m_player2;
-
+		GameEngine::Entity* scoreCounter;
 		GameEngine::Entity* wallNorth;
 		GameEngine::Entity* wallSouth;
 		GameEngine::Entity* wallWest;
 		GameEngine::Entity* wallEast;
-
+		
 		GameEngine::Entity* obstacle;
+		GameEngine::Entity* timer;
 	};
 
 }

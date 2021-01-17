@@ -27,7 +27,8 @@ void ScoreComponent::OnAddToWorld()
 
 void ScoreComponent::Update()
 {
-	//GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString("1");
+
+	//GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetColor(sf::Color::Red);
 }
 
 
