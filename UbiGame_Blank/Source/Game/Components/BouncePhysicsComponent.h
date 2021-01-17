@@ -18,5 +18,6 @@ namespace Game
 		sf::Vector2f m_wantedVelocity;
 		sf::Vector2f m_velocity;
 		sf::Vector2f m_lastPos;
+		int		     m_maxSpeed;
 	};
 }

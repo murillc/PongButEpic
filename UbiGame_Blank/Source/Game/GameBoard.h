@@ -21,9 +21,15 @@ namespace Game
 	private:
 		void CreatePlayers();
 		void CreateObstacle();
-		void CreateText();
+		void CreateWalls();
 		GameEngine::Entity* m_player1;
 		GameEngine::Entity* m_player2;
+
+		GameEngine::Entity* wallNorth;
+		GameEngine::Entity* wallSouth;
+		GameEngine::Entity* wallWest;
+		GameEngine::Entity* wallEast;
+
 		GameEngine::Entity* obstacle;
 	};
 
