@@ -7,6 +7,7 @@
 #include "GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h"
 #include <GameEngine/EntitySystem/Components/SoundComponent.h>
 #include <Game\Components\ScoreComponent.h>
+#include <Game\Components\Timer.h>
 #include <iostream>
 
 using namespace Game;
@@ -23,6 +24,7 @@ GameBoard::GameBoard()
 	CreateObstacle();
 	CreateWalls();
 	CreateText();
+	CreateTimer();
 }
 
 
@@ -240,15 +242,8 @@ void GameBoard::CreateText()
 	p1ScoreRender->SetFont("Inter-ExtraBold.ttf");
 	//p1ScoreRender->SetString("Pepega");
 	// PLAYER 2 SCORE DISPLAY
+}
 
-
-	
-
-
-
-<<<<<<< HEAD
-
-=======
 void GameBoard::CreateTimer()
 {
 	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
@@ -262,7 +257,6 @@ void GameBoard::CreateTimer()
 	timerRender->SetFont("Inter-ExtraBold.ttf");
 	timerRender->SetCharacterSizePixels(15);
 	
->>>>>>> parent of 120a492... gmae
 }
 
 
