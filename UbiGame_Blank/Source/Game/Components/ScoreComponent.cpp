@@ -3,7 +3,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
-
+#include <string>
 
 using namespace Game;
 
@@ -28,8 +28,7 @@ void ScoreComponent::OnAddToWorld()
 
 void ScoreComponent::Update()
 {
-	
-	//GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString(std::to_string(this->getScore()));
+	GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString("1");
 }
 
 

@@ -13,8 +13,8 @@ namespace Game
 		virtual void OnAddToWorld() override;
 
 		int getScore() { 
-
-			return scores[this->m_player];
+			return 3;
+			//return scores[this->m_player];
 		}
 
 		int getScore(int playerNum) {

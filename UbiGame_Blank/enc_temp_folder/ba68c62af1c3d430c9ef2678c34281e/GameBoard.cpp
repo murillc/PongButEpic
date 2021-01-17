@@ -194,6 +194,7 @@ void GameBoard::CreateText()
 
 	p1Score->SetPos(sf::Vector2f(400.f, 400.f));
 	p1ScoreRender->SetFont("Inter-ExtraBold.ttf");
+	p1ScoreRender->SetString(std::to_string(p1Score->GetComponent<ScoreComponent>()->getScore()));
 	//p1ScoreRender->SetString("Pepega");
 	// PLAYER 2 SCORE DISPLAY
 
