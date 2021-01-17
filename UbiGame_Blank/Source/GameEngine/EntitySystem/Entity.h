@@ -12,7 +12,6 @@ namespace GameEngine
 			Paddles,
 			LeftNet,
 			RightNet,
-			Timer,
 		};
 	}
 	

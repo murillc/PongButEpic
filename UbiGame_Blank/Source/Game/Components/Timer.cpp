@@ -25,16 +25,12 @@ void Timer::OnAddToWorld()
 }
 
 
-
 void Timer::Update()
 {
-	float dt = GameEngine::GameEngineMain::GetTimeDelta();
-	incrementTimer(dt);
+	float time = GameEngine::GameEngineMain::GetGameTime();
+	float nearest = roundf(time * 100.0) / 100.0;
+	GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString(std::to_string(time)+" s");
 
-	//float time = GameEngine::GameEngineMain::GetGameTime();
-	//float nearest = roundf(time * 100.0) / 100.0;
-	GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString(std::to_string(getTime())+" s");
-	
 }
 
 

@@ -246,7 +246,23 @@ void GameBoard::CreateText()
 
 
 
+<<<<<<< HEAD
 
+=======
+void GameBoard::CreateTimer()
+{
+	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	GameEngine::Entity* timer = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(timer);
+	GameEngine::TextRenderComponent* timerRender = static_cast<GameEngine::TextRenderComponent*>(timer->AddComponent<GameEngine::TextRenderComponent>());
+	
+	timer->AddComponent<Timer>();
+	timer->SetPos(sf::Vector2f(w/2-50.f, 550.f));
+	timerRender->SetFont("Inter-ExtraBold.ttf");
+	timerRender->SetCharacterSizePixels(15);
+	
+>>>>>>> parent of 120a492... gmae
 }
 
 

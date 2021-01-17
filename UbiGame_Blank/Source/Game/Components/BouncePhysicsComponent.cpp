@@ -8,7 +8,6 @@
 #include "GameEngine\Util\CollisionManager.h"
 #include "GameEngine\EntitySystem\Entity.h"
 #include "Game\Components\ScoreComponent.h"
-#include "Game\Components\Timer.h"
 #include <vector>
 #include <math.h>
 
@@ -50,14 +49,9 @@ void BouncePhysicsComponent::Update()
 
 		// V = Dx / Dt => Dx = V * Dt
 		sf::Vector2f deltaVelocity = m_velocity * dt * getTimeAcc()  ;
-
-		if (GetEntity()->GetType() != GameEngine::EntityType::Timer)
-		{
-			GetEntity()->SetPos(GetEntity()->GetPos() + deltaVelocity);
-			incrementSpeed(dt);
-		}
-
+		GetEntity()->SetPos(GetEntity()->GetPos() + deltaVelocity);
 		
+		incrementSpeed(dt);
 
 	}
 
@@ -121,10 +115,6 @@ void BouncePhysicsComponent::Update()
 			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::LeftNet) {
 				
 				GetEntity()->GetComponent<ScoreComponent>()->increaseScore(0);
-
-				
-				GetEntity()->GetComponent<Game::Timer>()->resetTimer();
-
 				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
 				//std::cout << "\nLeft Scored";
 
@@ -134,7 +124,6 @@ void BouncePhysicsComponent::Update()
 			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::RightNet) {
 
 				GetEntity()->GetComponent<ScoreComponent>()->increaseScore(1);
-				GetEntity()->GetComponent<Game::Timer>()->resetTimer();
 				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
 				//std::cout << "\nRight Scored";
 				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));
