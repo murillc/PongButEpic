@@ -13,6 +13,8 @@
 
 using namespace Game;
 
+
+
 BouncePhysicsComponent::BouncePhysicsComponent()
 {
 	m_maxSpeed = 500.f;
@@ -36,15 +38,20 @@ void BouncePhysicsComponent::Update()
 {
 	// Get delta time from the previous frame
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
+	float mult = 4;
+
 
 	if (dt > 0.f)
 	{
+		
 		m_velocity.x = m_wantedVelocity.x;
 		m_velocity.y = m_wantedVelocity.y;
 
 		// V = Dx / Dt => Dx = V * Dt
-		sf::Vector2f deltaVelocity = m_velocity * dt;
+		sf::Vector2f deltaVelocity = m_velocity * dt * getTimeAcc()  ;
 		GetEntity()->SetPos(GetEntity()->GetPos() + deltaVelocity);
+		printf("\n%f -- %f", dt, getTimeAcc());
+		incrementSpeed(dt);
 
 	}
 
@@ -112,6 +119,7 @@ void BouncePhysicsComponent::Update()
 				//std::cout << "\nLeft Scored";
 
 				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));
+				resetTimeAcc();
 			}
 			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::RightNet) {
 
@@ -119,6 +127,7 @@ void BouncePhysicsComponent::Update()
 				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
 				//std::cout << "\nRight Scored";
 				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));
+				resetTimeAcc();
 			}
 			
 

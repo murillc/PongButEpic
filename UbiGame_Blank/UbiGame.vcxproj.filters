@@ -160,6 +160,9 @@
     <Image Include="Resources\img\ball.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\img\bg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\sfx\hit.mp3">

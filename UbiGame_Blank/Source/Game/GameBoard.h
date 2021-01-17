@@ -23,6 +23,7 @@ namespace Game
 		void CreateObstacle();
 		void CreateWalls();
 		void CreateText();
+		void CreateBg();
 		GameEngine::Entity* m_player1;
 		GameEngine::Entity* m_player2;
 

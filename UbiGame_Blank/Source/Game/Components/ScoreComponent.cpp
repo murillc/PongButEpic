@@ -11,7 +11,6 @@ ScoreComponent::ScoreComponent()
 {	
 	//GetEntity()->SetPos(sf::Vector2f(350.f, 350.f));
 	int m_score = 0;
-	//int m_player = -1;
 	
 }
 
@@ -28,7 +27,7 @@ void ScoreComponent::OnAddToWorld()
 
 void ScoreComponent::Update()
 {
-	GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString("1");
+	//GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString("1");
 }
 
 

@@ -14,10 +14,12 @@ using namespace Game;
 GameBoard::GameBoard()
 	: m_player1(nullptr), m_player2(nullptr), obstacle(nullptr), wallNorth(nullptr)
 {
+	
 	CreatePlayers();
 	CreateObstacle();
 	CreateWalls();
 	CreateText();
+	CreateBg();
 }
 
 
@@ -27,13 +29,17 @@ GameBoard::~GameBoard()
 }
 
 void GameBoard::CreatePlayers()
-{
+{	
+
+	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	const float paddleHeight = h - 300.f;
 	// Player 1
 	m_player1 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1);
 
 	m_player1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()/2));
-	m_player1->SetSize(sf::Vector2f(25.f, 100.f));
+	m_player1->SetSize(sf::Vector2f(25.f, paddleHeight));
 	m_player1->SetType(GameEngine::EntityType::Paddles);
 
 
@@ -56,7 +62,7 @@ void GameBoard::CreatePlayers()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
 
 	m_player2->SetPos(sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->getWidth() - 50.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
-	m_player2->SetSize(sf::Vector2f(25.f, 100.f));
+	m_player2->SetSize(sf::Vector2f(25.f, paddleHeight));
 	m_player2->SetType(GameEngine::EntityType::Paddles);
 
 	// Render
@@ -74,6 +80,8 @@ void GameBoard::CreatePlayers()
 
 void GameBoard::CreateObstacle()
 {
+	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
 	GameEngine::Entity* obstacle = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(obstacle);
 
@@ -90,7 +98,7 @@ void GameBoard::CreateObstacle()
 	obstacle->AddComponent<ScoreComponent>();
 
 	GameEngine::SoundComponent* soundPlayer = static_cast<GameEngine::SoundComponent*>(obstacle->AddComponent<GameEngine::SoundComponent>());
-	std::cout << soundPlayer->LoadSoundFromFile("C:/Users/kurom/OneDrive/Documents/GitHub/PongButEpic/UbiGame_Blank/Resources/sfx/hit.wav");
+	std::cout << soundPlayer->LoadSoundFromFile("Resources/sfx/hit.wav");
 }
 
 void Game::GameBoard::CreateWalls()
@@ -141,7 +149,7 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::RenderComponent* renderE = static_cast<GameEngine::RenderComponent*>(netEast->AddComponent<GameEngine::RenderComponent>());
 	ScoreComponent* score1 = static_cast<ScoreComponent*>(netEast->AddComponent<ScoreComponent>());
 
-	renderE->SetFillColor(sf::Color::Red);
+	renderE->SetFillColor(sf::Color::Transparent);
 
 	netEast->AddComponent<GameEngine::CollidableComponent>();
 	score1->setPlayer(0);
@@ -162,7 +170,7 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::RenderComponent* renderW = static_cast<GameEngine::RenderComponent*>(netWest->AddComponent<GameEngine::RenderComponent>());
 	ScoreComponent* score2 = static_cast<ScoreComponent*>(netWest->AddComponent<ScoreComponent>());
 	
-	renderW->SetFillColor(sf::Color::Red);
+	renderW->SetFillColor(sf::Color::Transparent);
 
 	netWest->AddComponent<GameEngine::CollidableComponent>();
 	score2->setPlayer(1);
@@ -197,12 +205,24 @@ void GameBoard::CreateText()
 	//p1ScoreRender->SetString("Pepega");
 	// PLAYER 2 SCORE DISPLAY
 
+}
 
-	
+void GameBoard::CreateBg()
+{
+	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	GameEngine::Entity* bg = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(bg);
 
+	bg->SetPos(sf::Vector2f(w/2, h/2));
+	bg->SetSize(sf::Vector2f(800.f, 600.f));
 
+	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>(bg->AddComponent<GameEngine::SpriteRenderComponent>());
 
-
+	render->SetTexture(GameEngine::eTexture::Background);
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetZLevel(-1);
+			
 }
 
 
