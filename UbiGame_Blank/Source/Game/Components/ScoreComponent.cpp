@@ -28,7 +28,6 @@ void ScoreComponent::OnAddToWorld()
 
 void ScoreComponent::Update()
 {
-	GetEntity()->GetComponent<GameEngine::TextRenderComponent>()->SetString("1");
 }
 
 

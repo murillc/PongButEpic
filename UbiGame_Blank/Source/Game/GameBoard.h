@@ -23,7 +23,9 @@ namespace Game
 		void CreateObstacle();
 		void CreateWalls();
 		void CreateText();
-		GameEngine::Entity* m_player1;
+		GameEngine::Entity* m_player1_1;
+		GameEngine::Entity* m_player1_2;
+
 		GameEngine::Entity* m_player2;
 
 		GameEngine::Entity* wallNorth;
