@@ -60,10 +60,10 @@ void PlayerMovementComponent::Update()
 
 	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);
 
-	if (GetEntity()->GetPos().y < -200.f - GetEntity()->GetSize().y / 2) {
+	if (GetEntity()->GetPos().y < 0.f - GetEntity()->GetSize().y / 2) {
 		GetEntity()->SetPos(sf::Vector2f(GetEntity()->GetPos().x, 800.f + GetEntity()->GetSize().y / 2));
 	}
-	else if (GetEntity()->GetPos().y > 1000.f + GetEntity()->GetSize().y / 2) {
+	else if (GetEntity()->GetPos().y > 600.f + GetEntity()->GetSize().y / 2) {
 		GetEntity()->SetPos(sf::Vector2f(GetEntity()->GetPos().x, 0.f - GetEntity()->GetSize().y / 2));
 	}
 

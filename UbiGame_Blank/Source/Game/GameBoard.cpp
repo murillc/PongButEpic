@@ -14,7 +14,8 @@ using namespace Game;
 GameBoard::GameBoard()
 	: m_player1_1(nullptr)
 	, m_player1_2(nullptr)
-	, m_player2(nullptr)
+	, m_player2_1(nullptr)
+	, m_player2_2(nullptr)
 	, obstacle(nullptr)
 	, wallNorth(nullptr)
 {
@@ -37,7 +38,7 @@ void GameBoard::CreatePlayers()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1_1);
 
 	m_player1_1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()));
-	m_player1_1->SetSize(sf::Vector2f(25.f, 200.f));
+	m_player1_1->SetSize(sf::Vector2f(25.f, 500.f));
 	m_player1_1->SetType(GameEngine::EntityType::Paddles);
 
 	// Render
@@ -56,7 +57,7 @@ void GameBoard::CreatePlayers()
 	m_player1_2 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1_2);
 
-	m_player1_2->SetSize(sf::Vector2f(25.f, 200.f));
+	m_player1_2->SetSize(sf::Vector2f(25.f, 500.f));
 	m_player1_2->SetPos(sf::Vector2f(50.f, 0.f));
 	m_player1_2->SetType(GameEngine::EntityType::Paddles);
 
@@ -74,25 +75,45 @@ void GameBoard::CreatePlayers()
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	// Player 2
-	m_player2 = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2);
+	// Player 2 First Paddle
+	m_player2_1 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2_1);
 
-	m_player2->SetPos(sf::Vector2f(GameEngine::GameEngineMain::GetInstance()->getWidth() - 50.f, GameEngine::GameEngineMain::GetInstance()->getHeight() / 2));
-	m_player2->SetSize(sf::Vector2f(25.f, 100.f));
-	m_player2->SetType(GameEngine::EntityType::Paddles);
+	m_player2_1->SetPos(sf::Vector2f(700.f, GameEngine::GameEngineMain::GetInstance()->getHeight()));
+	m_player2_1->SetSize(sf::Vector2f(25.f, 500.f));
+	m_player2_1->SetType(GameEngine::EntityType::Paddles);
 
 	// Render
-	GameEngine::SpriteRenderComponent* spriteRender2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2->AddComponent<GameEngine::SpriteRenderComponent>());
+	GameEngine::SpriteRenderComponent* spriteRender2_1 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2_1->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	spriteRender2->SetFillColor(sf::Color::Transparent);
-	spriteRender2->SetTexture(GameEngine::eTexture::Player);
+	spriteRender2_1->SetFillColor(sf::Color::Transparent);
+	spriteRender2_1->SetTexture(GameEngine::eTexture::Player);
 
 	// Player Movement Component
-	PlayerMovementComponent* playerMove2 = static_cast<PlayerMovementComponent*>(m_player2->AddComponent<PlayerMovementComponent>());
-	playerMove2->setPlayer(2);
+	PlayerMovementComponent* playerMove2_1 = static_cast<PlayerMovementComponent*>(m_player2_1->AddComponent<PlayerMovementComponent>());
+	playerMove2_1->setPlayer(2);
 
-	m_player2->AddComponent<GameEngine::CollidablePhysicsComponent>();
+	m_player2_1->AddComponent<GameEngine::CollidablePhysicsComponent>();
+
+	// Second Paddle
+	m_player2_2 = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player2_2);
+
+	m_player2_2->SetSize(sf::Vector2f(25.f, 500.f));
+	m_player2_2->SetPos(sf::Vector2f(700.f, 0.f));
+	m_player2_2->SetType(GameEngine::EntityType::Paddles);
+
+	// Render
+	GameEngine::SpriteRenderComponent* spriteRender2_2 = static_cast<GameEngine::SpriteRenderComponent*>(m_player2_2->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender2_2->SetFillColor(sf::Color::Transparent);
+	spriteRender2_2->SetTexture(GameEngine::eTexture::Player);
+
+	// Player Movement Component
+	PlayerMovementComponent* playerMove2_2 = static_cast<PlayerMovementComponent*>(m_player2_2->AddComponent<PlayerMovementComponent>());
+	playerMove2_2->setPlayer(2);
+
+	m_player2_2->AddComponent<GameEngine::CollidablePhysicsComponent>();
 }
 
 void GameBoard::CreateObstacle()
@@ -124,8 +145,8 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::Entity* wallNorth = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallNorth);
 
-	wallNorth->SetPos(sf::Vector2f(1050.f, 0.f));
-	wallNorth->SetSize(sf::Vector2f(2000.f, 50.f));
+	wallNorth->SetSize(sf::Vector2f(600.f, 50.f));
+	wallNorth->SetPos(sf::Vector2f(wallNorth->GetSize().x / 2 + 75.f, 0.f));
 	wallNorth->SetType(GameEngine::EntityType::Walls);
 
 	// Render
@@ -139,8 +160,8 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::Entity* wallSouth = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallSouth);
 
-	wallSouth->SetPos(sf::Vector2f(1050.f, 600.f));
-	wallSouth->SetSize(sf::Vector2f(2000.f, 50.f));
+	wallSouth->SetSize(sf::Vector2f(600.f, 50.f));
+	wallSouth->SetPos(sf::Vector2f(wallSouth->GetSize().x/2 + 75.f, 600.f));
 	wallSouth->SetType(GameEngine::EntityType::Walls);
 
 	// Render
@@ -156,8 +177,8 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::Entity* netEast = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(netEast);
 
-	netEast->SetPos(sf::Vector2f(width, 100.f));
-	netEast->SetSize(sf::Vector2f(50.f, 100.f));
+	netEast->SetPos(sf::Vector2f(width, 0.f));
+	netEast->SetSize(sf::Vector2f(50.f, 2000.f));
 	netEast->SetType(GameEngine::EntityType::RightNet);
 
 	// Render

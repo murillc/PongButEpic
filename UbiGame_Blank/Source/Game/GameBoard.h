@@ -26,7 +26,8 @@ namespace Game
 		GameEngine::Entity* m_player1_1;
 		GameEngine::Entity* m_player1_2;
 
-		GameEngine::Entity* m_player2;
+		GameEngine::Entity* m_player2_1;
+		GameEngine::Entity* m_player2_2;
 
 		GameEngine::Entity* wallNorth;
 		GameEngine::Entity* wallSouth;
