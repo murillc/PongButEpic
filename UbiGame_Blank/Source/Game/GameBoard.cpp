@@ -108,10 +108,26 @@ void GameBoard::CreateObstacle()
 
 void GameBoard::CreateText()
 {
-	
 	GameEngine::Entity* title = new GameEngine::Entity();
+	GameEngine::Entity* p1Score = new GameEngine::Entity();
+	GameEngine::Entity* p2Score = new GameEngine::Entity();
+	
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(title);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(p1Score);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(p2Score);
 
+
+	// Title
+	GameEngine::TextRenderComponent* titleRender = static_cast<GameEngine::TextRenderComponent*>(title->AddComponent<GameEngine::TextRenderComponent>());
+	titleRender->SetFont("Inter-ExtraBold.ttf");
+	titleRender->SetString("Pong But Epic");
+
+	//
+
+	p1Score->AddComponent<ScoreComponent>();
+	p1Score->GetComponent<ScoreComponent>()->SetFont("Inter-ExtraBold.ttf");
+	p1Score->GetComponent<ScoreComponent>()->SetString("Test");
+	/*
 	Game::ScoreComponent* p1Score = static_cast<Game::ScoreComponent*>(title->AddComponent<Game::ScoreComponent>());
 
 	float centerX = GameEngine::GameEngineMain::GetInstance()->getWidth();
@@ -121,6 +137,7 @@ void GameBoard::CreateText()
 
 	p1Score->SetFont("Inter-ExtraBold.ttf");
 	p1Score->SetString(std::to_string(p1Score->getScore()));
+	*/
 	
 }
 
