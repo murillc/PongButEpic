@@ -25,6 +25,7 @@ GameBoard::GameBoard()
 	CreateWalls();
 	CreateText();
 	CreateTimer();
+	CreateBg();
 }
 
 
@@ -35,11 +36,14 @@ GameBoard::~GameBoard()
 
 void GameBoard::CreatePlayers()
 {
+	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
+
 	// Player 1 First Paddle
 	m_player1_1 = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player1_1);
 
-	m_player1_1->SetPos(sf::Vector2f(50.f, GameEngine::GameEngineMain::GetInstance()->getHeight()));
+	m_player1_1->SetPos(sf::Vector2f(50.f, h));
 	m_player1_1->SetSize(sf::Vector2f(25.f, 500.f));
 	m_player1_1->SetType(GameEngine::EntityType::Paddles);
 
@@ -187,7 +191,7 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::RenderComponent* renderE = static_cast<GameEngine::RenderComponent*>(netEast->AddComponent<GameEngine::RenderComponent>());
 	ScoreComponent* score1 = static_cast<ScoreComponent*>(netEast->AddComponent<ScoreComponent>());
 
-	renderE->SetFillColor(sf::Color::Red);
+	renderE->SetFillColor(sf::Color::Transparent);
 
 	netEast->AddComponent<GameEngine::CollidableComponent>();
 	score1->setPlayer(0);
@@ -208,7 +212,7 @@ void Game::GameBoard::CreateWalls()
 	GameEngine::RenderComponent* renderW = static_cast<GameEngine::RenderComponent*>(netWest->AddComponent<GameEngine::RenderComponent>());
 	ScoreComponent* score2 = static_cast<ScoreComponent*>(netWest->AddComponent<ScoreComponent>());
 	
-	renderW->SetFillColor(sf::Color::Red);
+	renderW->SetFillColor(sf::Color::Transparent);
 
 	netWest->AddComponent<GameEngine::CollidableComponent>();
 	score2->setPlayer(1);
@@ -259,6 +263,23 @@ void GameBoard::CreateTimer()
 	
 }
 
+void GameBoard::CreateBg()
+{
+	float h = GameEngine::GameEngineMain::GetInstance()->getHeight();
+	float w = GameEngine::GameEngineMain::GetInstance()->getWidth();
+	GameEngine::Entity* bg = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(bg);
+
+	bg->SetPos(sf::Vector2f(w / 2, h / 2));
+	bg->SetSize(sf::Vector2f(800.f, 600.f));
+
+	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>(bg->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	render->SetTexture(GameEngine::eTexture::Background);
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetZLevel(-1);
+
+}
 
 void GameBoard::Update()
 {	

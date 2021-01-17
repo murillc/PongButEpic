@@ -24,6 +24,7 @@ namespace Game
 		void CreateWalls();
 		void CreateText();
 		void CreateTimer();
+		void CreateBg();
 
 		GameEngine::Entity* m_player1_1;
 		GameEngine::Entity* m_player1_2;

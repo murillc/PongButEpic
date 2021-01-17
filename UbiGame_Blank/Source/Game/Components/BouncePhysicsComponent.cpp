@@ -8,6 +8,7 @@
 #include "GameEngine\Util\CollisionManager.h"
 #include "GameEngine\EntitySystem\Entity.h"
 #include "Game\Components\ScoreComponent.h"
+#include "Game\Components\Timer.h"
 #include <vector>
 #include <math.h>
 
@@ -118,12 +119,17 @@ void BouncePhysicsComponent::Update()
 				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
 				//std::cout << "\nLeft Scored";
 
+				Game::Timer::resetTimer();
+
 				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));
 				resetTimeAcc();
 			}
 			else if (colComponent->GetEntity()->GetType() == GameEngine::EntityType::RightNet) {
 
 				GetEntity()->GetComponent<ScoreComponent>()->increaseScore(1);
+
+				Game::Timer::resetTimer();
+
 				//std::cout << GetEntity()->GetComponent<ScoreComponent>()->getScore();
 				//std::cout << "\nRight Scored";
 				GetEntity()->SetPos(sf::Vector2f(400.f, 400.f));

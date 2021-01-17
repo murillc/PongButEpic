@@ -39,7 +39,7 @@ void PlayerMovementComponent::Update()
 	if (m_player == 1) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
-			wantedVel.y -= playerVel;
+			//wantedVel.y -= playerVel;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
@@ -47,9 +47,10 @@ void PlayerMovementComponent::Update()
 		}
 	}
 	else if (m_player == 2) {
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			wantedVel.y -= playerVel;
+			//wantedVel.y -= playerVel;
 			
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))

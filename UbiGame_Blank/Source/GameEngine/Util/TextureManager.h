@@ -14,7 +14,7 @@ namespace GameEngine
 			Player,
 
 			Obstacle,
-
+			Background,
 			Count,
 		};
 	}	
@@ -25,6 +25,7 @@ namespace GameEngine
 		{
 			case eTexture::Player: return "Player.png";
 			case eTexture::Obstacle: return "Obstacle.png";
+			case eTexture::Background: return "bg.png";
 		}
 		return "UnknownTexType";
 	}
